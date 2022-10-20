@@ -40,3 +40,39 @@ moment().valueOf() you will get a full timestamp
 5. // pop,join,split chaining
 use slice(0,-1) instead of pop() as slice returns a copy of the array while pop returns the last element.
 you can use the chain method with pop when you expect the last item to be what you want.''
+you can use the chain method with pop when you expect the last item to be what you want.
+
+6. // save loan logs into file using template
+
+// Code to render statement in html file on localhost
+
+var filePath = global.Config.uploadDirPath + "temp.html"
+var regex = /                /g;
+console.log(ejs.render(html,objectname));
+fs.writeFileSync(filePath,ejs.render(html,objectname).replace(regex, ''));
+
+
+// Save logs without template
+var filePath = global.Config.uploadDirPath + "temp.html"
+fs.writeFile(filePath, data, (err) => {if (err) throw err});
+
+//eg
+
+var myData = JSON.stringify(data);
+var filePath = global.Config.uploadDirPath + "temp2.json"
+console.log('\n----------Creating temp2.json------------------');
+fs.writeFileSync(filePath,myData,(err) => { if (err) throw err;});
+
+// save into diffenrent file each time
+
+var myData = JSON.stringify(results[key]);
+var filePath = global.Config.uploadDirPath + `firesults_${new Date().getTime()}.json`;
+console.log(`\n----------Creating ${filePath.split('/').pop()}------------------`);
+fs.writeFileSync(filePath,myData,(err) => { if (err) throw err;});
+
+// ultimate file logging
+
+var data = {"name":"loanRequest",value:JSON.stringify(loanRequest),"uniqueName":true,"append":true};
+var filePath = global.Config.uploadDirPath + `${data.name}_${data.uniqueName ? new Date().getTime() : '1'}.json`;
+console.log(`\n----------Creating ${filePath.split('/').pop()}------------------`);
+data.append ? require('fs').writeFileSync(filePath,data.value,{flag:'a'},(err) => { if (err) throw err;}):fs.writeFileSync(filePath,data.value,(err) => { if (err) throw err;});
