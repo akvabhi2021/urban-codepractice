@@ -76,3 +76,50 @@ var data = {"name":"loanRequest",value:JSON.stringify(loanRequest),"uniqueName":
 var filePath = global.Config.uploadDirPath + `${data.name}_${data.uniqueName ? new Date().getTime() : '1'}.json`;
 console.log(`\n----------Creating ${filePath.split('/').pop()}------------------`);
 data.append ? require('fs').writeFileSync(filePath,data.value,{flag:'a'},(err) => { if (err) throw err;}):fs.writeFileSync(filePath,data.value,(err) => { if (err) throw err;});
+
+7. // Moment js get first and last day of current month
+
+i) Using moment
+
+// start of month in default (UTC) format
+const startOfMonth = moment().startOf('month');
+// end of month in specific format
+const endOfMonth = moment().endOf('month').format('YYYY-MM-DD hh:mm');
+
+ii) Usind Date
+
+var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+var firstDay = new Date(y, m, 1);
+var lastDay = new Date(y, m + 1, 0);
+
+firstDay = moment(firstDay).format(yourFormat);
+lastDay = moment(lastDay).format(yourFormat);
+
+8. // Proper error handling
+
+.catch(function (error) {
+var error_message = "An error occurred while making the repayment. Please try again later."
+if(error.data && error.data.message) {
+error_message = error.data.message;
+}else if(error.message){
+error_message = error.message;
+}
+MessageFactory.error(error_message);
+})
+
+9. // Delete first character of a string in Javascript
+
+var s = "0000test"
+while(s.charAt(0) === '0')
+{
+s = s.substr(1); // only this is req for deleting only 1 char
+}
+This will kill any 0's at the start of the string.'
+
+// Remove the last char
+
+var sillyString = myString.slice(0, -1);
+
+// 1st and last char
+
+var sillyString = myString.substr(1).slice(0, -1);
